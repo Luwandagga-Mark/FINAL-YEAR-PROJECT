@@ -24,23 +24,31 @@ const SignInScreen = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
             <Image source={logo} style={[styles.logo, { height: height * 0.3 }]} resizeMode="contain" />
-            <Text>MAKERERE UNIVERSITY E-SERVICES</Text>
-            <Custominput placeholder="Enter Registration Number" value={registrationnumber} setValue={setRegistrationnumber} />
+            
+            <Text style={styles.label}>MAKERERE UNIVERSITY E-SERVICES</Text>
+
+            <Text style={styles.label1}>Already registered? </Text>
             <Custombutton
              text="Enter fingerprint" 
-             onPress={onEnterfingerprintPressed} 
+             onPress={onEnterfingerprintPressed}
              />
+
+            <Text style={styles.label1}>Having problems with thumb? </Text>
             <Custombutton
-             text="Problems With Thumb" 
+             text="Press here" 
              onPress={onProblemsWithThumbPressed} 
              type="TERTIARY"
-             bgColor="black" 
+             bgColor="black"
              />
+
+            <Text style={styles.label1}>Don't have an account?</Text>
             <Custombutton
-             text="Don't have an account? Create one" 
+             text=" Create one" 
              onPress={onSignUpPressed} 
              bgColor = "green"
              fgColor= "white"
+             style={{ marginBottom: 30 }}
+
              />
         </View>
         </ScrollView>
@@ -52,10 +60,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
+    label: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: 'black',
+        marginBottom: 20,
+    },
+    label1: {
+        alignItems: 'left',
+        fontSize: 18,
+        color: 'red',
+        marginBottom: 5,
+    },
     logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 200,
+        width: '90%',
+        maxWidth: 400,
+        maxHeight: 600,
     },
 });
 

@@ -10,8 +10,8 @@ const SignUpScreen = () => {
     const [telephonenumber, setTelephonenumber] = useState('');
     const [gender, setGender] = useState('');
     const [dateofbirth, setDateofbirth] = useState('');
-    const [religion, setReligion] = useState('');
-    const [homedistrict, setHomedistrict] = useState('');
+    const [college, setCollege] = useState('');
+    const [course, setCourse] = useState('');
     const [nationality, setNationality] = useState('');
     const [nationalidnumber, setNationalidnumber] = useState('');
     const [passportnumber, setPassportnumber] = useState('');
@@ -38,7 +38,7 @@ const SignUpScreen = () => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Other Names</Text>
+                    <Text style={styles.label}>First Name</Text>
                     <Custominput
                         value={othernames}
                         setValue={setOthernames}
@@ -62,7 +62,7 @@ const SignUpScreen = () => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>gender</Text>
+                    <Text style={styles.label}>Gender</Text>
                     <Custominput value={gender} setValue={setGender} />
                 </View>
 
@@ -75,18 +75,18 @@ const SignUpScreen = () => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Religion</Text>
+                    <Text style={styles.label}>College</Text>
                     <Custominput
-                        value={religion}
-                        setValue={setReligion}
+                        value={college}
+                        setValue={setCollege}
                     />
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Home District</Text>
+                    <Text style={styles.label}>Course</Text>
                     <Custominput
-                        value={homedistrict}
-                        setValue={setHomedistrict}
+                        value={course}
+                        setValue={setCourse}
                     />
                 </View>
 
