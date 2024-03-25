@@ -8,12 +8,13 @@ import Services from './src/screens/Services';
 import Others from './src/screens/OTHERS/Others';
 import Accept from './src/screens/Accept/Accept';
 import Denied from './src/screens/Denied/Denied';
+import Fingerprint from './src/screens/Fingerprint/Fingerprint';
 
 
 const App = () => {
   return (
     <SafeAreaView style={styles.root}>
-      <SignUpScreen />
+      <SignInScreen />
     </SafeAreaView>
   );
 };
