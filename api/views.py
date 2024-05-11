@@ -2,12 +2,13 @@ from django.shortcuts import render
 
 # Create your views here.
 # api/views.py
-
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from .models import *
 from .serializers import *
 
 class StudentListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated] 
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 

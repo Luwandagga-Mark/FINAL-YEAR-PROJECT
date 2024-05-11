@@ -5,19 +5,18 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models import Max
 from django.db.models.signals import pre_save
+from django.contrib.auth import get_user_model
 
 
 # Create your models here.
 class Student(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,null=True)
     surname = models.CharField(max_length=255, default='Mugisha')
-    othernames = models.CharField(max_length=255)
-    gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female')], default='Male', help_text="Gender")
-    telephonenumber = models.CharField(max_length=20, null=True, blank=True)
+    firstname = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, null=True, blank=True)
+    telephonenumber = models.CharField(max_length=20, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female')], default='Male', help_text="Gender")
     dateofbirth = models.DateField(null=True, blank=True)
-    nationality = models.CharField(max_length=255, null=True, blank=True)
-    nationalidnumber = models.CharField(max_length=255, null=True, blank=True)
-    passportnumber = models.CharField(max_length=255, null=True, blank=True)
 
 class Guardian(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE)
