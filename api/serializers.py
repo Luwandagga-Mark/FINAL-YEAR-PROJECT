@@ -1,7 +1,7 @@
 # api/serializers.py
 
 from rest_framework import serializers
-from .models import Student, Guardian, StudentDetails, Services, Fingerprint
+from .models import Student, Guardian, StudentDetails, Services, Pin, pin_model
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,8 +23,14 @@ class ServicesSerializer(serializers.ModelSerializer):
         model = Services
         fields = '__all__'
 
-class FingerprintSerializer(serializers.ModelSerializer):
+class PinSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Fingerprint
+        model = Pin
         fields = '__all__'
-# Define serializers for other models (Guardian, StudentDetails, Services, Fingerprint) similarly
+
+class Pin_modelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = pin_model
+        fields = '__all__'
+
+

@@ -7,8 +7,9 @@ from rest_framework import generics
 from .models import *
 from .serializers import *
 
+
 class StudentListCreateAPIView(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated] 
+    #permission_classes = [IsAuthenticated] 
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -24,10 +25,27 @@ class ServicesListCreateAPIView(generics.ListCreateAPIView):
     queryset = Services.objects.all()
     serializer_class = ServicesSerializer
 
-class StudentListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+class PinListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Pin.objects.all()
+    serializer_class = PinSerializer
 
-class FingerprintListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Fingerprint.objects.all()
-    serializer_class = FingerprintSerializer
+class pin_modelListCreateAPIView(generics.ListCreateAPIView):
+    queryset = pin_model.objects.all()
+    serializer_class = Pin_modelSerializer
+
+# views.py
+from django.http import JsonResponse
+from .models import Pin
+import json
+
+def store_pin(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        student_number = data.get('studentNumber', None)
+        pin = data.get('pin', None)
+        if student_number and pin:
+            Pin.objects.create(studentNumber=student_number, pin=pin)
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'message': 'Invalid data'})
+
+

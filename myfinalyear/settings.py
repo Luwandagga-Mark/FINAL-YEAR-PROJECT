@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e%dg*pta)$&rfa+q^gyiyq5mt6$m$uwmuhfab3i768!!_@-031
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['172.20.10.6']
 
 
 # Application definition
@@ -40,14 +40,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'api',
+    'corsheaders'
     
 ]
 
 REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+       # 'rest_framework.permissions.AllowAny',
+       # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
     
 }
@@ -85,6 +86,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -113,8 +115,20 @@ TEMPLATES = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-
+CORS_ALLOW_HEADERS = [
+    'access-control-allow-origin'
+    'content-type'
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 WSGI_APPLICATION = 'myfinalyear.wsgi.application'
+
 
 
 # Database
