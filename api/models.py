@@ -60,6 +60,13 @@ class pin_model(models.Model):
     studentNumber = models.CharField(max_length=50, null=True, blank=True, help_text='Student number')
     pin_number= models.CharField(max_length=6, null=True, blank=True)
 
+class Profile(models.Model):
+    surname = models.CharField(max_length=255, default='Mugisha')
+    firstname = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(max_length=255, null=True, blank=True)
+    telephonenumber = models.CharField(max_length=20, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female')], default='Male', help_text="Gender")
+    dateofbirth = models.DateField(null=True, blank=True)
 
 
 

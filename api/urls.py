@@ -11,6 +11,7 @@ urlpatterns = [
     path('pin/', PinListCreateAPIView.as_view(), name='pin'),
     path('pin-model/', pin_modelListCreateAPIView.as_view(), name='pin-model'),
     path('store-pin/', store_pin, name='store_pin'),
+    path('user-profile/', UserProfileView.as_view(), name='user-profile'),
     
     # Add other URL patterns as needed
 ]

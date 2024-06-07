@@ -49,3 +49,20 @@ def store_pin(request):
     return JsonResponse({'success': False, 'message': 'Invalid data'})
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Student
+from .serializers import StudentSerializer
+
+class UserProfileView(APIView):
+    def get(self, request):
+        firstname = request.query_params.get('firstname')
+        try:
+            student = Student.objects.get(firstname=firstname)
+            serializer = StudentSerializer(student)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Student.DoesNotExist:
+            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
