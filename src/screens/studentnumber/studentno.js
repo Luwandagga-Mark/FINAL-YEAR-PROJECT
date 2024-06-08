@@ -21,7 +21,9 @@ const collegeCodes = {
 
 const StudentNumberScreen = () => {
     const [studentNumber, setStudentNumber] = useState('');
-    const [pin_number, setPin] = useState('');
+    const [email, setEmail] = useState('');
+    const [otp, setOtp] = useState('');
+    const [otpSent, setOtpSent] = useState(false);
     const navigation = useNavigation();
 
     const validateStudentNumber = (number) => {
@@ -29,52 +31,77 @@ const StudentNumberScreen = () => {
         return regex.test(number);
     };
 
-    const validatePin = (pin_number) => {
-        const regex = /^\d{6}$/; // Ensure the PIN is exactly 6 digits
-        return regex.test(pin_number);
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const validateOtp = (otp) => {
+        const regex = /^\d{6}$/; // Ensure the OTP is exactly 6 digits
+        return regex.test(otp);
     };
 
     const extractCollegeCode = (number) => {
         return number.split('-')[2];
     };
 
-    const onNextPressed = async () => {
-        if (validateStudentNumber(studentNumber) && validatePin(pin_number)) {
+    const sendOtp = async () => {
+        if (validateStudentNumber(studentNumber) && validateEmail(email)) {
             try {
-                const response = await axios.get('http://172.20.10.6:8000/pin/', {
+                const response = await axios.post('https://your-api-endpoint.com/send-otp', {
                     studentNumber,
-                    pin_number,
+                    email,
                 });
 
-                if (response.status === 200 || response.status === 201) {
-                    Alert.alert('Success', 'Your student number and PIN have been stored.');
-                    const collegeCode = extractCollegeCode(studentNumber);
-                    navigation.navigate('Services', { studentNumber, collegeCode });
-
-                    const studentdata = {
-                        studentNumber,
-                        pin_number
-                    };
-
-                    console.log('Student data:', studentdata);
+                if (response.data.success) {
+                    Alert.alert('OTP Sent', `An OTP has been sent to ${email}`);
+                    setOtpSent(true);
                 } else {
-                    Alert.alert('Error', response.data.message || 'Failed to store data. Please try again.');
+                    Alert.alert('Error', response.data.message || 'Failed to send OTP. Please try again.');
                 }
             } catch (error) {
-                console.error('Error storing data', error);
-                Alert.alert('Error', 'Failed to store data. Please try again later.');
+                console.error('Error sending OTP', error);
+                Alert.alert('Error', 'Failed to send OTP. Please try again later.');
             }
         } else {
             Alert.alert(
                 'Invalid Input',
-                'Please enter a valid student number in the format: XX-XXXXX-X-(D|E)-(U|I) and a 6-digit PIN.'
+                'Please enter a valid student number in the format: XX-XXXXX-X-(Day|Evening)-(U|I) and a valid email address.'
+            );
+        }
+    };
+
+    const onVerifyPressed = async () => {
+        if (validateOtp(otp)) {
+            try {
+                const response = await axios.post('https://your-api-endpoint.com/verify-otp', {
+                    studentNumber,
+                    email,
+                    otp,
+                });
+
+                if (response.data.success) {
+                    Alert.alert('Success', 'Your OTP has been verified.');
+                    const collegeCode = extractCollegeCode(studentNumber);
+                    navigation.navigate('Services', { studentNumber, collegeCode });
+                } else {
+                    Alert.alert('Error', response.data.message || 'Failed to verify OTP. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error verifying OTP', error);
+                Alert.alert('Error', 'Failed to verify OTP. Please try again later.');
+            }
+        } else {
+            Alert.alert(
+                'Invalid OTP',
+                'Please enter a valid 6-digit OTP.'
             );
         }
     };
 
     return (
         <View style={styles.root}>
-            <Text style={styles.title}>Enter Your Student Number and PIN</Text>
+            <Text style={styles.title}>Enter Your Student Number and Email</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Student Number"
@@ -84,14 +111,26 @@ const StudentNumberScreen = () => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="PIN"
-                value={pin_number}
-                onChangeText={setPin}
-                keyboardType="numeric"
-                maxLength={6}
-                secureTextEntry
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
             />
-            <Custombutton text="Next" onPress={onNextPressed} bgColor="green" />
+            {otpSent && (
+                <TextInput
+                    style={styles.input}
+                    placeholder="OTP"
+                    value={otp}
+                    onChangeText={setOtp}
+                    keyboardType="numeric"
+                    maxLength={6}
+                />
+            )}
+            {!otpSent ? (
+                <Custombutton text="Send OTP" onPress={sendOtp} bgColor="green" />
+            ) : (
+                <Custombutton text="Verify OTP" onPress={onVerifyPressed} bgColor="green" />
+            )}
         </View>
     );
 };
