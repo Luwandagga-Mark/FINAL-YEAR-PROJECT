@@ -33,17 +33,30 @@ headers:{
     }
 };
 
-export const createAxiosInstance=  async ()=>{
+export const createAxioshostNOAuth=  async ()=>{
+    try{
+       
+        const axiosInstance = axios.create(
+            {
+baseURL:baseURL,
+headers:{
+    "Accept":"application/json",
+    "Authorization":`Bearer ${accessToken}`
+}
+            }
+        )
+        
+        return axiosInstance;
+    }catch(e){
+        console.log('error',e)
+      throw new Error(`error ${e}`)
+    }
+}
+
+export const createAxioshostWithAuth=  async ()=>{
     try{
         var accessToken =''
-       try {
-        const refreshToken = await AsyncStorage.getItem('refreshToken');
-        await storeTokens(refreshToken);
-         accessToken = await AsyncStorage.getItem('accessToken');
-
-       }catch (e){
-         accessToken='';
-       }
+     
    //await  alert(accessToken);
         const axiosInstance = axios.create(
             {
@@ -61,5 +74,6 @@ headers:{
       throw new Error(`error ${e}`)
     }
 }
+
 
 

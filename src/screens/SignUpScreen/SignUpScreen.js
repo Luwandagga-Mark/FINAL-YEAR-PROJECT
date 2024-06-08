@@ -65,14 +65,7 @@ const SignUpScreen = () => {
 
         try {
             // Send data to the backend
-            const response = await axios.post('http://172.20.10.6:8000/students/', formData);
-            if (response.status === 200 || response.status === 201) {
-                console.log('Registration successful:', response.data);
-                // Navigate to the next screen and pass form data as params
-                navigation.navigate('Guardian', formData);
-            } else {
-                Alert.alert('Error', response.data.message || 'Failed to register.');
-            }
+        
         } catch (error) {
             console.error('Error registering user', error);
             Alert.alert('Error', 'Failed to register. Please try again later.');
