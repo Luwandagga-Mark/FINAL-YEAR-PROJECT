@@ -185,8 +185,11 @@ def getStudentNo(request):
         test = padded_number
     number = str(test).zfill(5)
     print(number)
-
-    studNo = f'{request.data['year']}-{number}-{request.data['collegeCode']}-{request.data['timeCode']}-{request.data['nationalityCode']}'    
+    year1 = request.data['year']
+    collegeCode = request.data['collegeCode']
+    timecode =request.data['timeCode']
+    nation = request.data['nationalityCode']
+    studNo = f'{year1}-{number}-{collegeCode}-{timecode}-{nation}'    
     print(studNo)
     return Response({'number':f'{studNo}'})
 
