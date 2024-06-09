@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Custombutton from '../components/Custombutton';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { getBioID } from '../../APIRequests/BiometricSignUp';
+import FingerprintAuthentication from '../Fingerprint1/Fingerprint';
+import { FingerprintRegister } from '../../APIRequests/ServicesApiRequests/RegisterBiometric';
 
 const StdNo = () => {
     const navigation = useNavigation();
@@ -10,23 +13,18 @@ const StdNo = () => {
     const { studentNumber } = route.params;
 
     const onNextPressed = async () => {
-        const hasHardware = await LocalAuthentication.hasHardwareAsync();
-        const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-
-        if (hasHardware && isEnrolled) {
-            const result = await LocalAuthentication.authenticateAsync({
-                promptMessage: 'Authenticate with fingerprint',
-            });
-
-            if (result.success) {
-                Alert.alert('Success', 'Fingerprint authentication successful.');
-                navigation.navigate('SignIn');
-            } else {
-                Alert.alert('Failed', 'Fingerprint authentication failed. Please try again.');
-            }
-        } else {
-            Alert.alert('Not supported', 'Fingerprint authentication is not supported on this device.');
-        }
+        
+       const loginSuccess = await FingerprintRegister(studentNumber)
+       if (loginSuccess === true){
+            Alert.alert('Success', 'Fingerprint authentication successful.');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'SignIn' }],
+          });
+       
+       } else {
+        Alert.alert('Failed', `${loginSuccess}`);
+       }
     };
 
     return (
@@ -36,7 +34,7 @@ const StdNo = () => {
                 <Text style={styles.studentNumber}>{studentNumber}</Text>
                 <Text style={styles.prompt}>Use fingerprint authentication for more security</Text>
                 <Custombutton
-                    text="Click here to use your device Fingerprint"
+                    text="Click here to use your device registered biometrics for account access "
                     onPress={onNextPressed}
                     bgColor="green"
                 />

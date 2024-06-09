@@ -1,9 +1,11 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { accessToken, baseURL, loggedOut, refreshToken } from "./constants";
+import { PhonegetData, PhonestoreData } from "./Storedata";
 
 
 
-const baseURL ='https://bed8-197-239-11-61.ngrok-free.app'
+
 
 
 export const storeTokens = async ( refreshToken) => {
@@ -41,7 +43,7 @@ export const createAxioshostNOAuth=  async ()=>{
 baseURL:baseURL,
 headers:{
     "Accept":"application/json",
-    "Authorization":`Bearer ${accessToken}`
+    
 }
             }
         )
@@ -53,9 +55,35 @@ headers:{
     }
 }
 
+export const refreshTokenAPI = async ()=>{
+    try {
+        const axiosInstance1 = await createAxioshostNOAuth();
+        const datarefreshtoken = await PhonegetData(refreshToken)
+        const data = {
+            refresh: datarefreshtoken,
+          }
+        
+        const response = await axiosInstance1.post('/api/token/refresh/',data  ,
+        {
+            withCredentials:true
+        }
+    )
+
+  
+   await PhonestoreData(accessToken,response.data[accessToken]);
+   await PhonestoreData(refreshToken,response.data[refreshToken])
+return true
+  
+    } catch(e){
+        console.log('error',e)
+        throw loggedOut
+    }
+}
+
 export const createAxioshostWithAuth=  async ()=>{
     try{
-        var accessToken =''
+        await refreshTokenAPI()
+        const accessTokenBackend = await PhonegetData(accessToken);
      
    //await  alert(accessToken);
         const axiosInstance = axios.create(
@@ -63,7 +91,8 @@ export const createAxioshostWithAuth=  async ()=>{
 baseURL:baseURL,
 headers:{
     "Accept":"application/json",
-    "Authorization":`Bearer ${accessToken}`
+    "Authorization":`Bearer ${accessTokenBackend}`,
+    'Content-Type': 'multipart/form-data',
 }
             }
         )

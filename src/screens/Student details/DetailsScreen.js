@@ -4,9 +4,12 @@ import Custominput from '../components/Custominput';
 import Custombutton from '../components/Custombutton';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from "@react-native-picker/picker";
-import axios from 'axios';
+import axios from 'axios'; // Import axios for making API requests
+import { SignUPAPI, signUPAPI } from '../../APIRequests/SignUpAPI';
+import { getStudentNo } from '../../APIRequests/GenerateStudentNo';
 
-const DetailsScreen = () => {
+const DetailsScreen = ({ route }) => {
+    const { details } = route.params;
     const [yearOfEntry, setYearOfEntry] = useState('');
     const [nationality, setNationality] = useState('');
     const [college, setCollege] = useState('');
@@ -46,8 +49,11 @@ const DetailsScreen = () => {
         "SOL": ["Law", "Legal Studies"],
         'SHORT COURSE': ['Short courses', 'visitng students']
     };
-
-    const generateStudentNumber = () => {
+    
+    const generateStudentNumber = async() => {
+        const year2 = yearOfEntry.slice(-2);
+        
+        let sequenceNumber = 1;
         const year = yearOfEntry.slice(-2); // Extract last two digits of the year
         const randomPart = Math.floor(10000 + Math.random() * 90000).toString().padStart(5, '0');
         const collegeCode = collegeCodes[college];
@@ -58,10 +64,11 @@ const DetailsScreen = () => {
             Alert.alert("Error", "Please make sure all fields are filled in correctly.");
             return null;
         }
-
-        return `${year}-${randomPart}-${collegeCode}-${timeCode}-${nationalityCode}`;
+        const studNo = await getStudentNo({'year':year2,'collegeCode':collegeCode,'timeCode':timeCode,'nationalityCode':nationalityCode})
+       
+        return studNo
+       // return `${year}-${sequenceNumberFormatted}-${collegeCode}-${timeCode}-${nationalityCode}`;
     };
-
     const onNextPressed = async () => {
         // Validate required fields
         if (!yearOfEntry || !nationality || !college || !shift || !course) {
@@ -70,10 +77,11 @@ const DetailsScreen = () => {
         }
 
         // Generate student number
-        const studentNumber = generateStudentNumber();
-
+        const studentNumber = await generateStudentNumber();
+        console.log('Response:', studentNumber)
         // Prepare data to be sent to the backend
         const studentData = {
+            ...details,
             yearOfEntry,
             nationality,
             college,
@@ -83,22 +91,12 @@ const DetailsScreen = () => {
             passportNumber: nationality === "International" ? passportNumber : null,
             studentNumber,
         };
-
         try {
-            // Make POST request to register the student
-            const response = await axios.post('http://172.20.10.6:8000/student-details/', studentData);
-            if (response.status === 200 || response.status === 201) {
-                const { id, studentNumber } = response.data;
-                console.log('Student registration successful:', response.data);
-                // Navigate to StdNo screen with the student number and ID
-                navigation.navigate('StdNo', { studentNumber, studentId: id });
-            } else {
-                Alert.alert('Error', response.data.message || 'Failed to register student.');
-            }
-        } catch (error) {
-            console.error('Error registering student:', error);
-            Alert.alert('Error', 'Failed to register student. Please try again later.');
-        }
+           await signUPAPI(studentData);
+           navigation.navigate('StdNo',{'studentNumber':studentNumber});
+        } catch(e){}
+       
+        
     };
 
     return (

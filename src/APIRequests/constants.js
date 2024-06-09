@@ -1,0 +1,5 @@
+export const biometricID = 'biometricID'
+export const baseURL ='https://4757-41-75-173-141.ngrok-free.app'
+export const accessToken = 'access'
+export const refreshToken = 'refresh'
+export const loggedOut = 'logged out'

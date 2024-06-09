@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Alert } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useNavigation } from '@react-navigation/native';
+import { loginBioID, verifyBioID } from '../../APIRequests/BiometricLogin';
+import { loginUserAPI } from '../../APIRequests/login';
 
 const FingerprintAuthentication = () => {
     const [authenticationMessage, setAuthenticationMessage] = useState('');
@@ -10,28 +12,46 @@ const FingerprintAuthentication = () => {
 
     const handleFingerprintAuthentication = async () => {
         const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
-
-        if (!isBiometricAvailable) {
-            return Alert.alert('Biometric Auth not Supported', 'Please Enter OTP');
-        }
-
-        const enrolled = await LocalAuthentication.isEnrolledAsync();
-        if (!enrolled) {
-            return Alert.alert('No Biometric Enrollment', 'Please set up biometric authentication in your device settings.');
-        }
-
-        const biometricAuth = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Login With Biometrics',
-            cancelLabel: 'Cancel',
-            disableDeviceFallback: true,
-        });
-
-        if (biometricAuth.success) {
-            setAuthenticationMessage('Fingerprint authentication successful');
-            navigation.navigate('RegNo'); // Navigate to "RegNo" upon successful authentication
+        const verifyDeviceEnrollment = await verifyBioID();
+        if (verifyDeviceEnrollment){
+            if (!isBiometricAvailable) {
+                return Alert.alert('Biometric Auth not Supported', 'Please Enter OTP');
+            }
+    
+            const enrolled = await LocalAuthentication.isEnrolledAsync();
+            if (!enrolled) {
+                return Alert.alert('No Biometric Enrollment', 'Please set up biometric authentication in your device settings.');
+            }
+    
+            const biometricAuth = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Login With Biometrics',
+                cancelLabel: 'Cancel',
+                disableDeviceFallback: true,
+            });
+           
+            if (biometricAuth.success) {
+                const loginWithBiometric = await loginBioID();
+                const loginSuccess = await loginUserAPI(loginWithBiometric["username"],loginWithBiometric["password"])
+                if (loginSuccess){
+                  navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Services' }],
+                      }); 
+                }
+                setAuthenticationMessage('Fingerprint authentication successful');
+               
+            } else {
+                setAuthenticationMessage('Fingerprint authentication failed');
+            }
         } else {
-            setAuthenticationMessage('Fingerprint authentication failed');
+            Alert.alert('Failed', 'This device has no biometrics enrolled for an account.');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'SignIn' }],
+              });
+           
         }
+       
     };
 
     return (

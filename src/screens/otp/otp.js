@@ -3,6 +3,8 @@ import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Custombutton from '../components/Custombutton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
+import { verifyOTP } from '../../APIRequests/LoginWithOtp';
+import { loginUserAPI } from '../../APIRequests/login';
 
 const OTPScreen = () => {
     const [otp, setOtp] = useState('');
@@ -16,7 +18,6 @@ const OTPScreen = () => {
 
     const sendOtp = async () => {
         try {
-            await axios.post('https://your-api-endpoint.com/send-otp', { studentNumber });
             Alert.alert('Info', 'OTP has been sent to your email.');
         } catch (error) {
             console.error('Error sending OTP', error);
@@ -26,17 +27,19 @@ const OTPScreen = () => {
 
     const onVerifyPressed = async () => {
         try {
-            const response = await axios.post('https://your-api-endpoint.com/verify-otp', {
+        
+         const loginDetails =      await verifyOTP({
                 studentNumber,
                 otp,
-            });
-
-            if (response.data.success) {
-                Alert.alert('Success', 'OTP verified successfully.');
-                navigation.navigate('Services');
-            } else {
-                Alert.alert('Error', 'Invalid OTP. Please try again.');
+            })
+            const loginSuccess = await loginUserAPI(loginDetails["username"],loginDetails["password"])
+            if (loginSuccess){
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Services' }],
+                  });
             }
+      
         } catch (error) {
             console.error('Error verifying OTP', error);
             Alert.alert('Error', 'Failed to verify OTP. Please try again later.');

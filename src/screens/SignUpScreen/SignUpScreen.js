@@ -61,15 +61,9 @@ const SignUpScreen = () => {
             dateofbirth: formattedDate, // Use formatted date
         };
 
-        console.log('Form Data:', formData);
+        navigation.navigate('Details',{'details':formData});
 
-        try {
-            // Send data to the backend
-        
-        } catch (error) {
-            console.error('Error registering user', error);
-            Alert.alert('Error', 'Failed to register. Please try again later.');
-        }
+       
     };
 
     return (

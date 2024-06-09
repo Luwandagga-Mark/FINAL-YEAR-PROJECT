@@ -23,6 +23,7 @@ import MedicalScreen from './src/screens/medical/medical';
 import AccommodationScreen from './src/screens/accomodation/accomodation';
 import BankingScreen from './src/screens/banking/banking';
 import NewsBlog from './src/screens/Blog/blog';
+import LoadingScreen from './src/loadingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,8 +33,9 @@ const App = () => {
   return (
     <SafeAreaView style={styles.root}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignIn">
-          <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Navigator initialRouteName="loading">
+        <Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }}  />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="Fingerprint" component={Fingerprint} />
           <Stack.Screen name="Guardian" component={Guardian} />

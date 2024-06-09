@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import Custombutton from '../components/Custombutton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -9,23 +9,11 @@ import axios from 'axios';
 const Services = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { studentNumber, collegeCode } = route.params;
-
+    
+const [studentNumber,setStudentNumber] =useState();
+const [collegeCode,setCollegeCode] =useState('A');
     const handleServiceSelection = async (serviceName) => {
-        try {
-            const response = await axios.post('http://172.20.10.6:8000/select-service/', {
-                studentNumber,
-                service: serviceName,
-            });
-            if (response.data.success) {
-                Alert.alert('Success', 'Service selection saved successfully.');
-            } else {
-                Alert.alert('Error', response.data.message || 'Failed to save service selection.');
-            }
-        } catch (error) {
-            console.error('Error storing service selection', error);
-            Alert.alert('Error', 'Failed to save service selection. Please try again later.');
-        }
+        
     };
 
     const renderButtons = () => {

@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 //import { loginUser } from '../APIRequests/login';
 //import DeviceInfo from 'react-native-device-info';
 import Constants from 'expo-constants';
+import { getBioID } from '../APIRequests/BiometricSignUp';
+import { refreshTokenAPI } from '../APIRequests/http';
 
 
 const SignInScreen = () => {
@@ -15,8 +17,8 @@ const SignInScreen = () => {
     const navigation = useNavigation();
 
     const onEnterfingerprintPressed = async() => {
-        
-        navigation.navigate('Fingerprint');
+      
+        navigation.navigate('Fingerprint');// undefined-55.2.A.4.332
     };
 
     const onProblemsWithThumbPressed = async() => {
