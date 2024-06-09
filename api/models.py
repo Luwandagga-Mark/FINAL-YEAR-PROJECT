@@ -37,7 +37,7 @@ class StudentDetails(models.Model):
     address = models.CharField(max_length=255)
     
     # New field to store the student number
-    student_number = models.CharField(max_length=12, unique=True, null=True, blank=True, help_text="Student number")
+    student_number = models.CharField(max_length=255, unique=True, null=True, blank=True, help_text="Student number")
     
     # Define the code mappings
     COLLEGE_CODES = {

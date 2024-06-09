@@ -199,7 +199,7 @@ def generateUniqueID(request):
     data = request.data
     print(data)
     id = None
-    stud_id =User.objects.get(usernam=data['studNo'])
+    stud_id =User.objects.get(username=data['studNo'])
     while True:
         random_string = get_random_string(length=16)
         print(random_string)
