@@ -3,7 +3,8 @@ import { accessToken, loggedOut, refreshToken } from "../constants";
 
 export const logoutAPI = async ()=>{
     try {
-       
+     
+        
   
    await PhonestoreData(accessToken,'');
    await PhonestoreData(refreshToken,'')

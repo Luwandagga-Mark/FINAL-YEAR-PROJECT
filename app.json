@@ -21,7 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ],
+      "package": "com.mugumbyabenon.project"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,14 +34,22 @@
     "plugins": [
       "expo-router",
       [
-          "expo-local-authentication",
-          {
-              "fallbackToPasscode": true,
-              "disableDeviceFallback": false,
-              "authenticateType": 1,
-              "fingerprintPermission": "Allow $(PRODUCT_NAME) to use fingerprint authentication to unlock Secret Info."
-          }
+        "expo-local-authentication",
+        {
+          "fallbackToPasscode": true,
+          "disableDeviceFallback": false,
+          "authenticateType": 1,
+          "fingerprintPermission": "Allow $(PRODUCT_NAME) to use fingerprint authentication to unlock Secret Info."
+        }
       ]
-  ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d17d060e-fb9f-4091-a5ae-086384f062bf"
+      }
+    }
   }
 }
