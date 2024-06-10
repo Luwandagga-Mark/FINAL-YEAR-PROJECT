@@ -1,0 +1,5 @@
+export const biometricID = 'biometricID'
+export const baseURL ='https://final-year-project-n9rt.onrender.com'
+export const accessToken = 'access'
+export const refreshToken = 'refresh'
+export const loggedOut = 'logged out'
