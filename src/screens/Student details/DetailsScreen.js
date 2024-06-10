@@ -47,7 +47,7 @@ const DetailsScreen = ({ route }) => {
         "COVAB": ["Veterinary Medicine", "Animal Production", "Wildlife Health", "Biomedical Labarotary", "Industrial Livestock"],
         "MUBS": ["Business Administration", "Procurement", "Human Resource Management"],
         "SOL": ["Law", "Legal Studies"],
-        'SHORT COURSE': ['Short courses', 'visitng students']
+        'SHORT COURSE/VISITING STUDENT': ['Short courses', 'visitng students']
     };
     
     const generateStudentNumber = async() => {
