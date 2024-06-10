@@ -109,7 +109,7 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def deleteBiometric(request):
     data =request.data
-    Fingerprint.objects.filter(device_name=data['name'],device_model=data['model']).delete()
+    Fingerprint.objects.filter(student_details =request.user,device_name=data['name'],device_model=data['model']).delete()
     return Response()
 
 @api_view(['GET'])
