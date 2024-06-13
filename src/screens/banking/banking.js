@@ -12,7 +12,7 @@ const BankingScreen = () => {
     const [hasRetake, setHasRetake] = useState('');
     const [retakeAmount, setRetakeAmount] = useState('');
 
-    const banks = ['Bank A', 'Bank B', 'Bank C', 'Bank D'];
+    const banks = ['Equity', 'Centenary', 'Stanbic', 'Post Bank'];
 
     const onSave = () => {
         if (!amount || !bank || !accountNumber) {
@@ -69,7 +69,6 @@ const BankingScreen = () => {
 
                 {!studentType && (
                     <View style={styles.buttonContainer}>
-                        <Text style={styles.subtitle}>Are you a government or private student?</Text>
                         <Custombutton
                             text="Government"
                             onPress={() => setStudentType('Government')}
@@ -79,6 +78,11 @@ const BankingScreen = () => {
                             text="Private"
                             onPress={() => setStudentType('Private')}
                             bgColor="red"
+                        />
+                        <Custombutton
+                            text="Alumni"
+                            onPress={() => setStudentType('Alumni')}
+                            bgColor="blue"
                         />
                     </View>
                 )}
@@ -95,6 +99,16 @@ const BankingScreen = () => {
                             text="Other Fees"
                             onPress={() => setFeeType('Other Fees')}
                             bgColor="red"
+                        />
+                    </View>
+                )}
+
+{studentType === 'Alumni' && !feeType && (
+                    <View style={styles.buttonContainer}>
+                        <Custombutton
+                            text="Alumni banking"
+                            onPress={() => setFeeType('Functional Fees')}
+                            bgColor="green"
                         />
                     </View>
                 )}

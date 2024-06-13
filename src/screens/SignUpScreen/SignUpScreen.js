@@ -4,7 +4,7 @@ import Custominput from '../components/Custominput';
 import Custombutton from '../components/Custombutton';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
+
 
 const SignUpScreen = () => {
     const [surname, setSurname] = useState('');

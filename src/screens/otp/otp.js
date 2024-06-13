@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Custombutton from '../components/Custombutton';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import axios from 'axios';
 import { verifyOTP } from '../../APIRequests/LoginWithOtp';
 import { loginUserAPI } from '../../APIRequests/login';
 

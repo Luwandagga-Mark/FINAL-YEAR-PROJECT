@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, ActivityIndicator, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
 import { getProfileAPI } from '../../APIRequests/ServicesApiRequests/ProfileAPI';
 import { loggedOut } from '../../APIRequests/constants';
 import { useNavigation } from '@react-navigation/native';

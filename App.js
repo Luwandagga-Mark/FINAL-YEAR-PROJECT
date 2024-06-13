@@ -14,7 +14,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DetailsScreen from './src/screens/Student details/DetailsScreen';
 import StdNo from './src/screens/Student/StdNo';
-import RegNo from './src/screens/Registrationnumber/RegNo';
 import axios from 'axios';
 import Profile from './src/screens/Profile';
 import OTPScreen from './src/screens/otp/otp';
@@ -24,6 +23,10 @@ import AccommodationScreen from './src/screens/accomodation/accomodation';
 import BankingScreen from './src/screens/banking/banking';
 import NewsBlog from './src/screens/Blog/blog';
 import LoadingScreen from './src/loadingScreen';
+import SpecificScreen from './src/screens/Specific/specific';
+import Specificservices from './src/screens/specific_service/specific_services';
+import Alumni from './src/screens/Alumni';
+import Alumniservices from './src/screens/Alumniservices';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +45,6 @@ const App = () => {
           <Stack.Screen name="Details" component={DetailsScreen} />
           <Stack.Screen name="AuthFinger" component={AuthFinger} />
           <Stack.Screen name="StdNo" component={StdNo} />
-          <Stack.Screen name="RegNo" component={RegNo} />
           <Stack.Screen name="Services" component={Services} />
           <Stack.Screen name="Accept" component={Accept} />
           <Stack.Screen name="Denied" component={Denied} />
@@ -54,6 +56,10 @@ const App = () => {
           <Stack.Screen name="banking" component={BankingScreen} />
           <Stack.Screen name="Blog" component={NewsBlog} />
           <Stack.Screen name="Others" component={Others} />
+          <Stack.Screen name="specific" component={SpecificScreen} />
+          <Stack.Screen name="specificservices" component={Specificservices} />
+          <Stack.Screen name="alumni" component={Alumni} />
+          <Stack.Screen name="alumniservices" component={Alumniservices} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

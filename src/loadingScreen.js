@@ -1,8 +1,6 @@
 // screens/LoadingScreen.js
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import logo from '../assets/images/logo.png';
 import { refreshTokenAPI } from './APIRequests/http';
 

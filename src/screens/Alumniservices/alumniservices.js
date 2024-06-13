@@ -6,7 +6,7 @@ import profileIcon from '../../assets/images/profile.webp';
 import newsIcon from '../../assets/images/blp.png';
 
 
-const Services = () => {
+const Alumniservices = () => {
     const navigation = useNavigation();
     const route = useRoute();
     
@@ -20,14 +20,9 @@ const [collegeCode,setCollegeCode] =useState('A');
         switch (collegeCode) {
             case 'A': // CAES
                 return [
-                    <Custombutton text="SPECIFIC SERVICES" onPress={onSpecificPressed} bgColor="blue" />,
-                    <Custombutton text="UNIVERSITY GATES" onPress={onGatesPressed} bgColor="black" />,
-                    <Custombutton text="BANKING" onPress={onBankingPressed} bgColor="red" />,
+                    <Custombutton text="TESTIMONIALS" onPress={onMedicalPressed} bgColor="black" />,
+                    <Custombutton text="TRANSCRIPTS" onPress={onAccomodationPressed} bgColor="green" />,
                     <Custombutton text="PARKING" onPress={onParkingPressed} bgColor="black" />,
-                    <Custombutton text="FOOD" onPress={onFoodPressed} bgColor="green" />,
-                    <Custombutton text="INTERNET" onPress={onInternetPressed} bgColor="black" />,
-                    <Custombutton text="UNIVERSITY PREMISES" onPress={onPremisesPressed} bgColor="black" />,
-                    <Custombutton text="ALUMNI SERVICES" onPress={onAlumniPressed} bgColor="blue" />,
         ];
             
             default:
@@ -37,46 +32,22 @@ const [collegeCode,setCollegeCode] =useState('A');
         }
     };
 
-    const onGatesPressed = () => {
-        handleServiceSelection('gate');
+    const onMedicalPressed = () => {
+        handleServiceSelection('accept');
         navigation.navigate('Accept');
     };
 
-    const onInternetPressed = () => {
-        handleServiceSelection('internet');
+    const onAccomodationPressed = () => {
+        handleServiceSelection('accept');
         navigation.navigate('Accept');
     };
 
-
-    const onBankingPressed = () => {
-        handleServiceSelection('banking');
-        navigation.navigate('banking');
-    };
 
     const onParkingPressed = () => {
         handleServiceSelection('parking');
         navigation.navigate('Accept');
     };
 
-    const onFoodPressed = () => {
-        handleServiceSelection('food');
-        navigation.navigate('Accept');
-    };
-
-    const onPremisesPressed = () => {
-        handleServiceSelection('premises');
-        navigation.navigate('Accept');
-    };
-
-    const onAlumniPressed = () => {
-        handleServiceSelection('alumni');
-        navigation.navigate('alumni');
-    };
-
-    const onSpecificPressed = () => {
-        handleServiceSelection('specific');
-        navigation.navigate('specific');
-    };
 
 
     const onProfilePressed = () => {
@@ -96,7 +67,7 @@ const [collegeCode,setCollegeCode] =useState('A');
                         style={styles.newsIcon} 
                     />
                 </TouchableOpacity>
-                <Text style={styles.title}>WELCOME TO MUK E-SERVICES</Text>
+                <Text style={styles.title}>MUK E-SERVICES</Text>
                 <TouchableOpacity onPress={onProfilePressed}>
                     <Image 
                         source={profileIcon} 
@@ -145,4 +116,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Services;
+export default Alumniservices;

@@ -4,7 +4,6 @@ import Custominput from '../components/Custominput';
 import Custombutton from '../components/Custombutton';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from "@react-native-picker/picker";
-import axios from 'axios'; // Import axios for making API requests
 import { SignUPAPI, signUPAPI } from '../../APIRequests/SignUpAPI';
 import { getStudentNo } from '../../APIRequests/GenerateStudentNo';
 
@@ -17,7 +16,6 @@ const DetailsScreen = ({ route }) => {
     const [course, setCourse] = useState('');
     const [nationalIdNumber, setNationalIdNumber] = useState('');
     const [passportNumber, setPassportNumber] = useState('');
-    const [alumni, setAlumni] = useState('');
     const navigation = useNavigation();
 
     const collegeCodes = {

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Custombutton from '../components/Custombutton';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import { signWithOTP } from '../../APIRequests/LoginWithOtp';
 
 const StudentNumberScreen = () => {
