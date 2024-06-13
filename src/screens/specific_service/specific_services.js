@@ -111,6 +111,8 @@ const Specificservices = () => {
                         <Custombutton text="MAIN LIBRARY" onPress={onLibraryPressed} bgColor="red" />
                         <Custombutton text="FOOD" onPress={onFoodPressed} bgColor="green" />
                         <Custombutton text="EXAMINATION" onPress={onExaminationPressed} bgColor="black" />
+                        <Custombutton text="ART STUDIO ACCESS" onPress={onExaminationPressed} bgColor="black" />
+
                     </>
                 );
             case 'H': // CONAS
